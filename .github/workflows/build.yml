@@ -1,0 +1,307 @@
+name: Build
+on:
+  push:
+  pull_request:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+env:
+  DEFAULT_PYTHON: "3.12"
+
+jobs:
+  build:
+    name: 🔨 Build distribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+      - name: 🏗 Set up PR environment
+        if: github.event_name == 'pull_request'
+        run: |
+          # use base ref of PR as branch name for versioning
+          echo "GIT_VERSION_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+      - name: 🔨 Build distribution
+        uses: OctoPrint/actions/build-dist@main
+        with:
+          artifact: dist
+
+  pre-commit:
+    name: 🧹 Pre-commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: 🏗 Set up Python ${{ env.DEFAULT_PYTHON }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON }}
+      - name: 🚀 Run pre-commit
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files --show-diff-on-failure
+
+  test-unit:
+    name: 🧪 Unit tests
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: 🏗 Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: 🧰 Determine cache key
+        run: |
+          hash=$(cat setup.py | sha256sum | cut -d" " -f1)
+          echo "CACHE_KEY=${{ github.job }}-${{ runner.os }}-python-${{ matrix.python }}-setuppy-$hash" >> $GITHUB_ENV
+      - name: 🧰 Cache pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: "~/.cache/pip"
+          key: "${{ env.CACHE_KEY }}"
+      - name: 🏗 Set up test dependencies
+        run: |
+          pip install -e .[develop]
+      - name: 🚀 Run test suite
+        run: |
+          pytest | tee report.txt
+          pytest_exit=${PIPESTATUS[0]}
+
+          # generate summary
+          python=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:3])))')
+          today=$(date +'%Y-%m-%d')
+          now=$(date +'%H:%M')
+          summary=$(tail -n1 report.txt | sed 's/^=*\s//g' | sed 's/\s=*$//g')
+
+          cat << EOF >> $GITHUB_STEP_SUMMARY
+          ### Test Report
+
+          *generated on $today at $now under Python $python*
+
+          <details>
+          <summary>$summary</summary>
+
+          \`\`\`
+          $(cat report.txt)
+          \`\`\`
+
+          </details>
+          EOF
+
+          # make sure we fail if pytest fails!
+          exit $pytest_exit
+
+  test-js-unit:
+    name: 🧪 JavaScript unit tests
+    needs: build
+    runs-on: ubuntu-22.04 # change back to ubuntu-latest once we figure out why puppeteer is unhappy under 24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: 🏗 Set up test dependencies
+        run: |
+          npm -g install node-qunit-puppeteer@2.1.2
+      - name: 🚀 Run helpers.js test suite
+        run: |
+          node-qunit-puppeteer tests/static/js/test-helpers.html
+          node-qunit-puppeteer tests/static/js/test-client-base.html
+
+  test-install:
+    name: 🧪 Installation tests
+    needs: build
+    if: github.event_name != 'push' || github.ref != 'refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+        installable: ["wheel", "sdist"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇ Download build result
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist
+      - name: 🏗 Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+      - name: 🧰 Determine installable & cache key for wheel
+        if: matrix.installable == 'wheel'
+        run: |
+          wheel=$(ls dist/*.whl | head -n1)
+          echo "INSTALLABLE=$wheel" >> $GITHUB_ENV
+
+          metadata=$(unzip -l "$wheel" | grep METADATA | tr -s " " | cut -d" " -f 5)
+          hash=$(unzip -p "$wheel" "$metadata" | grep "Requires-Dist:" | sort  | sha256sum | cut -d" " -f1)
+          echo "CACHE_KEY=${{ github.job }}-${{ runner.os }}-python-${{ matrix.python }}-wheel-$hash" >> $GITHUB_ENV
+      - name: 🧰 Determine installable & cache key for sdist
+        if: matrix.installable == 'sdist'
+        run: |
+          sdist=$(ls dist/*.tar.gz | grep -v source | head -n1)
+          echo "INSTALLABLE=$sdist" >> $GITHUB_ENV
+
+          setup=$(tar -ztf "$sdist" | grep setup.py | grep -v testballoon)
+          hash=$(tar -axzf "$sdist" "$setup" -O | sha256sum | cut -d" " -f1)
+          echo "CACHE_KEY=${{ github.job }}-${{ runner.os }}-python-${{ matrix.python }}-setuppy-$hash" >> $GITHUB_ENV
+      - name: 🧰 Cache pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: "~/.cache/pip"
+          key: "${{ env.CACHE_KEY }}"
+      - name: 🚀 Install OctoPrint
+        run: |
+          pip install ${{ env.INSTALLABLE }}
+
+  test-e2e:
+    name: 🧪 E2E tests
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.13"]
+    steps:
+      - name: ⬇ Download build result
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist
+
+      - name: 🧰 Determine installable & cache key
+        run: |
+          wheel=$(ls ${{ github.workspace }}/dist/*.whl | head -n1)
+          echo "INSTALLABLE=$wheel" >> $GITHUB_ENV
+
+          metadata=$(unzip -l "$wheel" | grep METADATA | tr -s " " | cut -d" " -f 5)
+          hash=$(unzip -p "$wheel" "$metadata" | grep "Requires-Dist:" | sort  | sha256sum | cut -d" " -f1)
+          echo "CACHE_KEY=${{ github.job }}-${{ runner.os }}-python-${{ matrix.python }}-wheel-$hash" >> $GITHUB_ENV
+
+      - name: 🧰 Cache pip cache
+        uses: actions/cache@v4
+        id: pip-cache
+        with:
+          path: "~/.cache/pip"
+          key: "${{ env.CACHE_KEY }}"
+
+      - name: 🎭 Run E2E
+        uses: OctoPrint/actions/e2e@main
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          octoprint: ${{ env.INSTALLABLE }}
+          python: ${{ matrix.python }}
+          suffix: "-py${{ matrix.python }}"
+
+  publish-on-release:
+    name: 📦 Publish build & source on GitHub release
+    if: github.event_name == 'release' && github.repository == 'OctoPrint/OctoPrint'
+    needs:
+      - pre-commit
+      - test-unit
+      - test-js-unit
+      - test-install
+      - test-e2e
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇ Download build result
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist
+
+      - name: ⬆ Upload to release
+        run: |
+          UPLOAD_URL="https://uploads.github.com/repos/${{ github.repository }}/releases/${{ github.event.release.id }}/assets"
+
+          for file in dist/*; do
+            [ -e "$file" ] || exit 1
+            echo "Uploading $file..."
+            response=$(curl -s -XPOST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type: $(file -b --mime-type $file)" \
+              --data-binary @$file \
+              "$UPLOAD_URL?name=$(basename $file)")
+            echo "$response" | jq -e '.errors' >/dev/null && echo "Error uploading $file to release: $response" && exit 1 || true
+          done
+
+  publish-on-testpypi:
+    name: 📦 Publish on TestPyPI
+    if: github.event_name == 'release' && github.repository == 'OctoPrint/OctoPrint'
+    needs:
+      - publish-on-release
+    runs-on: ubuntu-latest
+    environment:
+      name: testpypi
+      url: https://test.pypi.org/p/OctoPrint
+    permissions:
+      id-token: write
+    steps:
+      - name: ⬇ Download build result
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist
+      - name: 🧹 Remove some stuff that won't make it through twine check
+        run: |
+          rm dist/*.source.tar.gz
+          rm dist/sha512sums.txt
+      - name: ⬆ Upload to index
+        uses: pypa/gh-action-pypi-publish@release/v1
+        continue-on-error: true
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
+  publish-on-pypi:
+    name: 📦 Publish tagged releases to PyPI
+    if: github.event_name == 'release' && github.repository == 'OctoPrint/OctoPrint'
+    needs: publish-on-testpypi
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/OctoPrint
+    permissions:
+      id-token: write
+    steps:
+      - name: ⬇ Download build result
+        uses: actions/download-artifact@v6
+        with:
+          name: dist
+          path: dist
+      - name: 🧹 Remove some stuff that won't make it through twine check
+        run: |
+          rm dist/*.source.tar.gz
+          rm dist/sha512sums.txt
+      - name: ⬆ Publish to index
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  notify-custopizer-build:
+    name: 📧 Notify OctoPi-UpToDate
+    if: github.event_name == 'release' && github.repository == 'OctoPrint/OctoPrint'
+    needs: publish-on-pypi
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👀 Determine version
+        run: |
+          OCTOPRINT_VERSION=$(echo $GITHUB_REF | cut -d/ -f3)
+          echo "OCTOPRINT_VERSION=$OCTOPRINT_VERSION" >> $GITHUB_ENV
+      - name: 🚀 Repository Dispatch
+        uses: peter-evans/repository-dispatch@v4
+        with:
+          token: ${{ secrets.REPODISPATCH_TOKEN }}
+          repository: OctoPrint/OctoPi-UpToDate
+          event-type: octoprint_release
+          client-payload: '{"version": "${{ env.OCTOPRINT_VERSION }}"}'
