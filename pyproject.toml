@@ -148,6 +148,7 @@ docs = [
 
 [project.scripts]
 octoprint = "octoprint:main"
+chroma = "octoprint:main"
 
 [project.urls]
 homepage = "https://octoprint.org"

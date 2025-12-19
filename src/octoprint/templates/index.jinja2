@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html data-octoprint-version="{{ version.base|e }}">
     <head>
-        <title data-bind="text: title">OctoPrint</title>
+        <title data-bind="text: title">Chroma</title>
 
         <link rel="manifest"
               href="{{ url_for('static', filename='manifest.json') }}">
@@ -42,7 +42,7 @@
                         <div class="inner">
                             <div class="content">
                                 <h1 class="text-error">{{ _("You don't seem to have JavaScript enabled") }}</h1>
-                                {{ _("OctoPrint's UI requires JavaScript to work. Please enable JavaScript and reload.") }}
+                                {{ _("Chroma's UI requires JavaScript to work. Please enable JavaScript and reload.") }}
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="outer">
                         <div class="inner">
                             <div class="content">
-                                <h1 id="page-container-loading-header">{{ _("Connecting to OctoPrint's server...") }}</h1>
+                                <h1 id="page-container-loading-header">{{ _("Connecting to Chroma's server...") }}</h1>
                                 <p>
                                     <i id="page-container-loading-spinner"
                                        class="fas fa-spinner fa-spin fa-4x"></i>
@@ -81,7 +81,7 @@
                     <div class="container">
                         <a class="brand"
                            href="javascript:void(0)"
-                           data-bind="attr: {title: appearance.fullbrand}"><span data-bind="text: appearance.brand">OctoPrint</span></a>
+                           data-bind="attr: {title: appearance.fullbrand}"><span data-bind="text: appearance.brand">Chroma</span></a>
                         <div class="nav-collapse">
                             <!-- Navbar -->
                             <ul class="nav pull-right">
