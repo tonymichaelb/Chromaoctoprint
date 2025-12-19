@@ -1,0 +1,756 @@
+# Portuguese (Brazil) translations for OctoPrint.
+# Copyright (C) 2017-2025 The OctoPrint Project
+# This file is distributed under the same license as the OctoPrint project.
+msgid ""
+msgstr ""
+"Project-Id-Version: OctoPrint 1.11.5\n"
+"Report-Msgid-Bugs-To: i18n@octoprint.org\n"
+"POT-Creation-Date: 2025-12-01 12:05+0100\n"
+"PO-Revision-Date: 2025-12-08 19:30-0300\n"
+"Last-Translator: OctoPrint Community <i18n@octoprint.org>\n"
+"Language: pt_BR\n"
+"Language-Team: Portuguese (Brazil) <i18n@octoprint.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#: src/octoprint/access/permissions.py:274
+msgid "Admin is allowed to do everything"
+msgstr "Admins podem fazer qualquer coisa"
+
+#: src/octoprint/access/permissions.py:282
+msgid "Allows to gather basic status information"
+msgstr "Permite obter informações básicas de status"
+
+#: src/octoprint/access/permissions.py:293
+msgid "Allows to connect to and disconnect from a printer"
+msgstr "Permite conectar e desconectar da impressora"
+
+#: src/octoprint/access/permissions.py:300
+msgid "Allows to watch the webcam stream"
+msgstr "Permite assistir ao stream da webcam"
+
+#: src/octoprint/access/permissions.py:307
+msgid "Allows to run system commands"
+msgstr "Permite executar comandos do sistema"
+
+#: src/octoprint/access/permissions.py:317
+msgid "Allows to retrieve a list of all uploaded files and folders"
+msgstr "Permite recuperar uma lista de todos os arquivos e pastas carregados"
+
+#: src/octoprint/access/permissions.py:326
+msgid "Allows users to upload new files"
+msgstr "Permite aos usuários fazer upload de novos arquivos"
+
+#: src/octoprint/access/permissions.py:336
+msgid "Allows users to download files"
+msgstr "Permite aos usuários fazer download de arquivos"
+
+#: src/octoprint/access/permissions.py:345
+msgid "Allows users to delete files and folders"
+msgstr "Permite aos usuários excluir arquivos e pastas"
+
+#: src/octoprint/access/permissions.py:354
+msgid "Allows to select a file for printing"
+msgstr "Permite selecionar um arquivo para impressão"
+
+#: src/octoprint/access/permissions.py:361
+msgid "Allows to start, pause and cancel a print job"
+msgstr "Permite iniciar, pausar e cancelar um trabalho de impressão"
+
+#: src/octoprint/access/permissions.py:368
+msgid "Allows access to the GCODE viewer"
+msgstr "Permite acesso ao visualizador GCODE"
+
+#: src/octoprint/access/permissions.py:378
+msgid "Allows to watch the terminal tab"
+msgstr "Permite assistir à aba do terminal"
+
+#: src/octoprint/access/permissions.py:388
+msgid "Allows to control of the printer"
+msgstr "Permite controlar a impressora"
+
+#: src/octoprint/access/permissions.py:398
+msgid "Allows to slice files"
+msgstr "Permite fazer slice de arquivos"
+
+#: src/octoprint/access/permissions.py:405
+msgid "Allows to list timelapse videos"
+msgstr "Permite listar vídeos de timelapse"
+
+#: src/octoprint/access/permissions.py:411
+msgid "Allows to download timelapse videos"
+msgstr "Permite fazer download de vídeos de timelapse"
+
+#: src/octoprint/access/permissions.py:417
+msgid "Allows to delete timelapse videos"
+msgstr "Permite excluir vídeos de timelapse"
+
+#: src/octoprint/access/permissions.py:423
+msgid "Allows to list, delete and render unrendered timelapses"
+msgstr "Permite listar, excluir e renderizar timelapses não renderizados"
+
+#: src/octoprint/access/permissions.py:429
+msgid "Allows to change the timelapse settings"
+msgstr "Permite alterar as configurações de timelapse"
+
+#: src/octoprint/access/permissions.py:436
+msgid "Allows to read non sensitive settings"
+msgstr "Permite ler configurações não sensíveis"
+
+#: src/octoprint/access/permissions.py:445
+msgid "Allows to manage settings and also to read sensitive settings"
+msgstr "Permite gerenciar configurações e também ler configurações sensíveis"
+
+msgid "Settings"
+msgstr "Configurações"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "About"
+msgstr "Sobre"
+
+msgid "Help"
+msgstr "Ajuda"
+
+msgid "Home"
+msgstr "Início"
+
+msgid "Control"
+msgstr "Controle"
+
+msgid "Terminal"
+msgstr "Terminal"
+
+msgid "Temperature"
+msgstr "Temperatura"
+
+msgid "Webcam"
+msgstr "Webcam"
+
+msgid "Files"
+msgstr "Arquivos"
+
+msgid "Connection"
+msgstr "Conexão"
+
+msgid "Jobs"
+msgstr "Trabalhos"
+
+msgid "Print"
+msgstr "Imprimir"
+
+msgid "Pause"
+msgstr "Pausar"
+
+msgid "Resume"
+msgstr "Retomar"
+
+msgid "Stop"
+msgstr "Parar"
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Warning"
+msgstr "Aviso"
+
+msgid "Success"
+msgstr "Sucesso"
+
+msgid "Info"
+msgstr "Informação"
+
+msgid "Loading..."
+msgstr "Carregando..."
+
+msgid "Offline"
+msgstr "Offline"
+
+msgid "Online"
+msgstr "Online"
+
+msgid "Connecting..."
+msgstr "Conectando..."
+
+msgid "Disconnected"
+msgstr "Desconectado"
+
+msgid "Connected"
+msgstr "Conectado"
+
+msgid "Printing"
+msgstr "Imprimindo"
+
+msgid "Idle"
+msgstr "Inativo"
+
+msgid "Send"
+msgstr "Enviar"
+
+msgid "Upload"
+msgstr "Carregar"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Done"
+msgstr "Concluído"
+
+msgid "Enable"
+msgstr "Ativar"
+
+msgid "Disable"
+msgstr "Desativar"
+
+msgid "Refresh"
+msgstr "Atualizar"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Welcome to OctoPrint"
+msgstr "Bem-vindo ao OctoPrint"
+
+msgid "Printer Profile"
+msgstr "Perfil da Impressora"
+
+msgid "Bed Size"
+msgstr "Tamanho da Cama"
+
+msgid "Build Volume"
+msgstr "Volume de Construção"
+
+msgid "Hotend"
+msgstr "Hotend"
+
+msgid "Nozzle"
+msgstr "Bico"
+
+msgid "General"
+msgstr "Geral"
+
+msgid "Advanced"
+msgstr "Avançado"
+
+msgid "API"
+msgstr "API"
+
+msgid "Access Control"
+msgstr "Controle de Acesso"
+
+msgid "Users"
+msgstr "Usuários"
+
+msgid "Groups"
+msgstr "Grupos"
+
+msgid "Permissions"
+msgstr "Permissões"
+
+msgid "Logging"
+msgstr "Registro de Atividades"
+
+msgid "Server"
+msgstr "Servidor"
+
+msgid "Network"
+msgstr "Rede"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Appearance"
+msgstr "Aparência"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "Notifications"
+msgstr "Notificações"
+
+msgid "Plugin Manager"
+msgstr "Gerenciador de Plugins"
+
+msgid "Software Update"
+msgstr "Atualização de Software"
+
+msgid "Backup"
+msgstr "Backup"
+
+msgid "Restore"
+msgstr "Restaurar"
+
+msgid "Printer"
+msgstr "Impressora"
+
+msgid "Serial Connection"
+msgstr "Conexão Serial"
+
+msgid "Baud Rate"
+msgstr "Taxa de Transmissão"
+
+msgid "Connection Port"
+msgstr "Porta de Conexão"
+
+msgid "Verbose Logging"
+msgstr "Registro Detalhado"
+
+msgid "Tools"
+msgstr "Ferramentas"
+
+msgid "Bed"
+msgstr "Cama"
+
+msgid "Chamber"
+msgstr "Câmara"
+
+msgid "Heater"
+msgstr "Aquecedor"
+
+msgid "Extruder"
+msgstr "Extrator"
+
+msgid "Extrude"
+msgstr "Extrudar"
+
+msgid "Retract"
+msgstr "Retrair"
+
+msgid "Speed"
+msgstr "Velocidade"
+
+msgid "Distance"
+msgstr "Distância"
+
+msgid "Filament Diameter"
+msgstr "Diâmetro do Filamento"
+
+msgid "Nozzle Temperature"
+msgstr "Temperatura do Bico"
+
+msgid "Bed Temperature"
+msgstr "Temperatura da Cama"
+
+msgid "Preset"
+msgstr "Predefinição"
+
+msgid "Custom"
+msgstr "Personalizado"
+
+msgid "Target"
+msgstr "Alvo"
+
+msgid "Actual"
+msgstr "Real"
+
+msgid "Offset"
+msgstr "Deslocamento"
+
+msgid "Max"
+msgstr "Máximo"
+
+msgid "Min"
+msgstr "Mínimo"
+
+msgid "Cooling"
+msgstr "Resfriamento"
+
+msgid "Heating"
+msgstr "Aquecimento"
+
+msgid "Stabilizing"
+msgstr "Estabilizando"
+
+msgid "On Target"
+msgstr "No Alvo"
+
+msgid "Job Progress"
+msgstr "Progresso do Trabalho"
+
+msgid "Current Layer"
+msgstr "Camada Atual"
+
+msgid "Time Elapsed"
+msgstr "Tempo Decorrido"
+
+msgid "Time Remaining"
+msgstr "Tempo Restante"
+
+msgid "Estimated End"
+msgstr "Fim Estimado"
+
+msgid "Filament Used"
+msgstr "Filamento Usado"
+
+msgid "Z Position"
+msgstr "Posição Z"
+
+msgid "Average Print Speed"
+msgstr "Velocidade Média de Impressão"
+
+msgid "Abort"
+msgstr "Abortar"
+
+msgid "Restart"
+msgstr "Reiniciar"
+
+msgid "Recover"
+msgstr "Recuperar"
+
+msgid "Recovery Failed"
+msgstr "Falha na Recuperação"
+
+msgid "No Logs Found"
+msgstr "Nenhum Log Encontrado"
+
+msgid "Terminal Logs"
+msgstr "Registros do Terminal"
+
+msgid "Serial Log"
+msgstr "Registro Serial"
+
+msgid "OctoPrint Log"
+msgstr "Registro do OctoPrint"
+
+msgid "Last 100 Lines"
+msgstr "Últimas 100 Linhas"
+
+msgid "Total Lines"
+msgstr "Total de Linhas"
+
+msgid "Clear Logs"
+msgstr "Limpar Registros"
+
+msgid "Download Log"
+msgstr "Baixar Registro"
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Register"
+msgstr "Registrar"
+
+msgid "Change Password"
+msgstr "Alterar Senha"
+
+msgid "Profile"
+msgstr "Perfil"
+
+msgid "Administration"
+msgstr "Administração"
+
+msgid "API Key"
+msgstr "Chave da API"
+
+msgid "Generate API Key"
+msgstr "Gerar Chave da API"
+
+msgid "Delete API Key"
+msgstr "Excluir Chave da API"
+
+msgid "QR Code"
+msgstr "Código QR"
+
+msgid "Reset"
+msgstr "Redefinir"
+
+msgid "Default"
+msgstr "Padrão"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Action"
+msgstr "Ação"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Size"
+msgstr "Tamanho"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Owner"
+msgstr "Proprietário"
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Command"
+msgstr "Comando"
+
+msgid "Script"
+msgstr "Script"
+
+msgid "Output"
+msgstr "Saída"
+
+msgid "Parameter"
+msgstr "Parâmetro"
+
+msgid "Step"
+msgstr "Passo"
+
+msgid "Layout"
+msgstr "Layout"
+
+msgid "Enabled"
+msgstr "Ativado"
+
+msgid "Disabled"
+msgstr "Desativado"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Select all"
+msgstr "Selecionar tudo"
+
+msgid "Clear selection"
+msgstr "Limpar seleção"
+
+msgid "Delete selected"
+msgstr "Excluir selecionado"
+
+msgid "Download selected"
+msgstr "Baixar selecionado"
+
+msgid "Verify your credentials"
+msgstr "Verifique suas credenciais"
+
+msgid "Incorrect username or password"
+msgstr "Nome de usuário ou senha incorretos"
+
+msgid "Please re-authenticate"
+msgstr "Por favor, autentique-se novamente"
+
+msgid "Your session has expired"
+msgstr "Sua sessão expirou"
+
+msgid "Click to re-authenticate"
+msgstr "Clique para autenticar-se novamente"
+
+msgid "Session expired, please login again"
+msgstr "Sessão expirada, faça login novamente"
+
+msgid "Create new Account"
+msgstr "Criar nova Conta"
+
+msgid "Create Account"
+msgstr "Criar Conta"
+
+msgid "Account created"
+msgstr "Conta criada"
+
+msgid "Account creation failed"
+msgstr "Falha na criação da conta"
+
+msgid "User profile updated"
+msgstr "Perfil do usuário atualizado"
+
+msgid "Profile update failed"
+msgstr "Falha na atualização do perfil"
+
+msgid "Password changed"
+msgstr "Senha alterada"
+
+msgid "Password change failed"
+msgstr "Falha na alteração da senha"
+
+msgid "API key generated"
+msgstr "Chave da API gerada"
+
+msgid "API key generation failed"
+msgstr "Falha na geração da chave da API"
+
+msgid "API key deleted"
+msgstr "Chave da API excluída"
+
+msgid "API key deletion failed"
+msgstr "Falha na exclusão da chave da API"
+
+msgid "Print started"
+msgstr "Impressão iniciada"
+
+msgid "Print paused"
+msgstr "Impressão pausada"
+
+msgid "Print resumed"
+msgstr "Impressão retomada"
+
+msgid "Print cancelled"
+msgstr "Impressão cancelada"
+
+msgid "Print completed"
+msgstr "Impressão concluída"
+
+msgid "Print failed"
+msgstr "Falha na impressão"
+
+msgid "Printer connected"
+msgstr "Impressora conectada"
+
+msgid "Printer disconnected"
+msgstr "Impressora desconectada"
+
+msgid "Printer error"
+msgstr "Erro da impressora"
+
+msgid "Firmware error"
+msgstr "Erro do firmware"
+
+msgid "Communication error"
+msgstr "Erro de comunicação"
+
+msgid "Connection timeout"
+msgstr "Tempo de conexão expirado"
+
+msgid "Serial port error"
+msgstr "Erro da porta serial"
+
+msgid "Temperature error"
+msgstr "Erro de temperatura"
+
+msgid "Heating error"
+msgstr "Erro de aquecimento"
+
+msgid "Cooling error"
+msgstr "Erro de resfriamento"
+
+msgid "Extrusion error"
+msgstr "Erro de extrusão"
+
+msgid "Movement error"
+msgstr "Erro de movimento"
+
+msgid "Sensor error"
+msgstr "Erro do sensor"
+
+msgid "Configuration error"
+msgstr "Erro de configuração"
+
+msgid "File error"
+msgstr "Erro do arquivo"
+
+msgid "Format error"
+msgstr "Erro de formato"
+
+msgid "Parsing error"
+msgstr "Erro de análise"
+
+msgid "File uploaded"
+msgstr "Arquivo carregado"
+
+msgid "File download"
+msgstr "Download do arquivo"
+
+msgid "File deleted"
+msgstr "Arquivo excluído"
+
+msgid "File modified"
+msgstr "Arquivo modificado"
+
+msgid "Settings saved"
+msgstr "Configurações salvas"
+
+msgid "Settings saved successfully"
+msgstr "Configurações salvas com sucesso"
+
+msgid "Failed to save settings"
+msgstr "Falha ao salvar as configurações"
+
+msgid "Back"
+msgstr "Voltar"
+
+msgid "Next"
+msgstr "Próximo"
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "First"
+msgstr "Primeiro"
+
+msgid "Last"
+msgstr "Último"
+
+msgid "Close"
+msgstr "Fechar"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Confirm"
+msgstr "Confirmar"
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Search..."
+msgstr "Pesquisar..."
+
+msgid "Plugins"
+msgstr "Plugins"
+
+msgid "Model size"
+msgstr "Tamanho do modelo"
+
+msgid "Parsing..."
+msgstr "Analisando..."
+
+msgid "Analyzing..."
+msgstr "Analisando..."
+
+msgid "Ready!"
+msgstr "Pronto!"
+
+msgid "Reload"
+msgstr "Recarregar"
+
+msgid "Proceed"
+msgstr "Prosseguir"
+
+msgid "Username"
+msgstr "Nome de usuário"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "User"
+msgstr "Usuário"
+
+msgid "Later"
+msgstr "Depois"
+
+msgid "Mark read"
+msgstr "Marcar como lido"
