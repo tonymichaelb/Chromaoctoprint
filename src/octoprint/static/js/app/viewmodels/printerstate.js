@@ -436,32 +436,8 @@ $(function () {
 
             self.estimatedPrintTime(data.estimatedPrintTime);
 
-            const result = [];
-            if (
-                data.filament &&
-                typeof data.filament === "object" &&
-                _.keys(data.filament).length > 0
-            ) {
-                const keys = _.keys(data.filament);
-                keys.sort();
-                _.each(keys, (key) => {
-                    if (
-                        !_.startsWith(key, "tool") ||
-                        !data.filament[key] ||
-                        !data.filament[key].hasOwnProperty("length") ||
-                        data.filament[key].length <= 0
-                    )
-                        return;
-
-                    result.push({
-                        name: ko.observable(
-                            gettext("Tool") + " " + key.substr("tool".length)
-                        ),
-                        data: ko.observable(data.filament[key])
-                    });
-                });
-            }
-            self.filament(result);
+            // Filament data disabled for Chroma
+            self.filament([]);
 
             self.user(data.user);
         };
